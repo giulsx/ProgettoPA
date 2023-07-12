@@ -43,7 +43,7 @@ export async function insertModel(object: any, cost: number) {
   const date = new Date().toLocaleDateString();
 
   const model = await Graphs.create({
-    name: object.name, 
+    namemodel: object.name, 
     nodes: object.nodes,
     creation_date: date,
     version: 1, 
@@ -58,7 +58,7 @@ export async function insertUpdate(object: any, version: number) {
   const date = new Date().toLocaleDateString();
 
   const model = await Graphs.create({
-    name: object.name,
+    namemodel: object.name,
     nodes: object.nodes,
     creation_date: date,
     version: version, //in fase di aggiornamento viene incrementato
@@ -69,18 +69,18 @@ export async function insertUpdate(object: any, version: number) {
   return model;
 }
 
-export async function checkExistingModel(name: string, version?: number) {
+export async function checkExistingModel(namemodel: string, version?: number) {
   if (version) {
     const graphs = await Graphs.findOne({
-      where: { name: name, version: version },
+      where: { namemodel: namemodel, version: version },
     });
     return graphs;
   } else {
     const lastVersion: number = await Graphs.max('version', {
-      where: { name: name },
+      where: { namemodel: namemodel },
     });
     const graphs = await Graphs.findOne({
-      where: { name: name, version: lastVersion },
+      where: { namemodel: namemodel, version: lastVersion },
     });
     return graphs;
   }

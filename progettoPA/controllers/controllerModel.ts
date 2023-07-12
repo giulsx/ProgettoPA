@@ -1,10 +1,9 @@
 import * as user from "../model/modelUser";
 import * as auth from "../middleware/middlewareAuth";
-import * as graphs from "../model/model";
+import * as model from "../model/model";
 
 const Graph = require('node-dijkstra');
 require('dotenv').config();
-
 
 
 //creazione del modello
@@ -14,7 +13,7 @@ export class ModelController {
     try {
       let totalCost: number =
         auth.costoArchi(req.body.nodes) + auth.costoNodi(req.body.nodes); // calcoliamo il costo come somma dei costi dei vincoli e delle variabili
-      var flag = await graphs.insertModel(req.body, 1, totalCost);
+      var flag = await model.insertModel(req.body, totalCost);
       if (flag) {
         let oldBudget: any = await user.getBudget(req.user.email);
         let newBudget = oldBudget.budget - totalCost;
@@ -33,18 +32,14 @@ export class ModelController {
 
   public solveModel = async (req, res) => {
     try {
-      let modelSolve = await graphs.checkExistingModel(req.body.name, req.body.version); // Ottieni il modello dal database
-      let executionCost = modelSolve.cost;  // Calcola il costo dell'esecuzione come il costo addebitato durante la fase di creazione
-      let userBudget = await user.getBudget(req.user.email);
-      if (userBudget.budget < executionCost) { // Verifica se l'utente ha abbastanza budget per eseguire il modello
-        res.sendStatus(403); // Restituisci codice di errore 403 (Forbidden)
-        return;
-      }
-      let newBudget = userBudget.budget - executionCost;  // Aggiorna il budget dell'utente, sottraendo il costo del modello
+      let modelSolve: any = await model.checkExistingModel(req.body.namemodel, req.body.version); // Ottieni il modello dal database
+
+      let oldBudget : any = await user.getBudget(req.user.email)
+      let newBudget= oldBudget.budget - modelSolve.cost;
       await user.budgetUpdate(newBudget, req.user.email);
-      const graph = modelSolve.graph; // Assumi che il grafo sia fornito nel modello
+
       const startTime = performance.now(); // Calcola il tempo di inizio dell'esecuzione
-      let result = executeModel(graph, req.body.start, req.body.goal); // Esegui il modello specificando il nodo di partenza (start) e il nodo di arrivo (goal)
+      let result = executeModel(modelSolve.nodes, req.body.start, req.body.goal); // Esegui il modello specificando il nodo di partenza (start) e il nodo di arrivo (goal)
       const endTime = performance.now(); // Calcola il tempo di fine dell'esecuzione e determina la durata in millisecondi
       const executionTime = endTime - startTime;
       const pathCost = result.cost; // Aggiorna il costo del percorso con quello restituito dalla funzione `executeModel`
@@ -63,11 +58,11 @@ export class ModelController {
     
   public updateEdgeWeights = async (req, res) => {
     try {
-      const graphName = req.body.graphName; // nome del grafo
+      const graphName = req.body.namemodel; // nome del grafo
       const version = req.body.version;
       const edges = req.body.edges; // Array degli archi da aggiornare
   
-      let graphP = await graphs.checkExistingModel(graphName, version); // Verifica che il grafo esista nel database
+      let graphP = await model.checkExistingModel(graphName, version); // Verifica che il grafo esista nel database
       if (!graphP) { // Verifica che il grafo esista
         res.status(404).json({ message: 'Grafo non trovato' });
         return;
@@ -90,7 +85,7 @@ export class ModelController {
   
         graphP[node][neighbour] = weightedSum;  // Aggiorna il peso dell'arco nel grafo
       }
-      await graphs.insertUpdate(graphP, version + 1); // Salva il grafo aggiornato nel database
+      await model.insertUpdate(graphP, version + 1); // Salva il grafo aggiornato nel database
       res.status(200).json({ message: 'Pesi degli archi aggiornati con successo', graph: graphP }); // Restituisci la risposta con il grafo aggiornato
     } catch (error) {
       res.status(500).json({ message: 'Errore durante l\'aggiornamento dei pesi degli archi' });
@@ -100,7 +95,7 @@ export class ModelController {
   //Funzione che filtra in base alla data di modifica, numero di archi e numero di nodi
   public filterModel = async (req, res) => {
     try {
-      let models: any = await graphs.getModel(req.body.name);
+      let models: any = await model.getModel(req.body.name);
       let filteredModel = models
         .filter((item) => {
           if (req.body.date) {
@@ -135,7 +130,7 @@ public doSimulationModel = async (req, res) => {
   try {
     
     // Verifica che il grafo esista nel database
-    let graph = await graphs.checkExistingModel(req.body.name, req.body.version);
+    let graph = await model.checkExistingModel(req.body.namemodel, req.body.version);
 
     const start = req.body.start; // Valore di inizio della simulazione
     const stop = req.body.stop; // Valore di fine della simulazione

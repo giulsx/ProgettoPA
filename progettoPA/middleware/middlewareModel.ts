@@ -1,4 +1,4 @@
-import * as Graph from "../model/model";
+import * as model from "../model/model";
 
 // esempio di richiesta di modello
 
@@ -30,7 +30,7 @@ export async function newModelValidation(req: any, res: any, next: any) {
  */
 const validationModel = (model: any): boolean => {
   if (
-    (model.name != undefined && model.name && typeof model.name === "string") &&
+    (model.namemodel != undefined && model.namemodel && typeof model.namemodel === "string") &&
      validateNodes(model.nodes)
   ) {
     return true;
@@ -66,12 +66,12 @@ function validateNodes(nodes) {
  */
 export async function checkSolve(req: any, res: any, next: any) {
   if (
-    req.body.name &&
-    typeof req.body.name === "string" &&
+    req.body.namemodel &&
+    typeof req.body.namemodel === "string" &&
     req.body.version &&
     Number.isInteger(req.body.version)
   ) {
-    if (await Graph.checkExistingModel(req.body.name, req.body.version)) {
+    if (await model.checkExistingModel(req.body.namemodel, req.body.version)) {
       next();
     } else {
       res.sendStatus(404);
@@ -92,9 +92,9 @@ export async function checkSolve(req: any, res: any, next: any) {
  * @param res response
  * @param next
  */
-  export async function checkFIlter = (req: any, res: any, next: any) => {
+  export async function checkFilter(req: any, res: any, next: any){
     try {
-      if (req.body.name != undefined && typeof req.body.name === "string") {
+      if (req.body.namemodel != undefined && typeof req.body.namemodel === "string") {
         if ( req.body.date == undefined || (req.body.date != undefined && typeof req.body.date === "string")) {
         } else {
           throw "Bad Request";
@@ -131,8 +131,8 @@ export async function checkSolve(req: any, res: any, next: any) {
   export async function checkDoSimulation(req: any, res: any, next: any) {
     try {
       if (
-        req.body.name !== undefined &&
-        typeof req.body.name === "string" &&
+        req.body.namemodel !== undefined &&
+        typeof req.body.namemodel === "string" &&
         req.body.version !== undefined &&
         Number.isInteger(req.body.version) &&
         req.body.node !== undefined &&
@@ -166,8 +166,8 @@ export async function checkSolve(req: any, res: any, next: any) {
   export async function checkUpdateEdgeWeights(req: any, res: any, next: any) {
     try {
       if (
-        req.body.graphName != undefined &&
-        typeof req.body.graphName === 'string' &&
+        req.body.namemodel != undefined &&
+        typeof req.body.namemodel === 'string' &&
         req.body.version != undefined &&
         Number.isInteger(req.body.version) &&
         req.body.edges != undefined &&
