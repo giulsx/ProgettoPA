@@ -1,11 +1,14 @@
 require('dotenv').config();
 import { Sequelize} from "sequelize";
 
-export class SingletonDB { // connessione al db realizzata con classe Singleton
+export class SingletonDB 
+    { 
+    // connessione al db realizzata con classe Singleton
     private static instance: SingletonDB;
     private singleConnection: Sequelize; 
 
     private constructor() { 
+
         const db: string = process.env.PGDATABASE as string;
         const username: string = process.env.PGUSER as string;
         const password: string = process.env.PGPASSWORD as string;

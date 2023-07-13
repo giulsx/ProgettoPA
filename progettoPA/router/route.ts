@@ -1,7 +1,6 @@
-import * as mNM from "../middleware/middlewareModel";
-import * as auth from "../middleware/middlewareAuth";
-import * as admin from "../middleware/middlewareAdmin";
+
 import ModelController from "../controllers/controllerModel";
+import * as middleware from "../middleware/middleware_chain";
 
 const express = require("express");
 const router = express.Router();
@@ -21,13 +20,11 @@ router.use((err, req, res, next) => {
   }
 });
 
-router.use([auth.checkHeader, auth.checkToken, auth.verifyAndAuthenticate]);
 
 router.post(
   "/newModel",
-  auth.checkUser,
-  auth.checkCredito,
-  mNM.newModelValidation,
+  middleware.JWT,
+  middleware.newModel,
   async (req, res) => {
     cntrModel.insertNewModel(req, res);
   }
@@ -35,8 +32,8 @@ router.post(
 
 router.post(
   "/solveModel",
-  auth.checkUser,
-  mNM.checkSolve,
+  middleware.JWT,
+  middleware.solveModel,
   async (req, res) => {
     cntrModel.solveModel(req, res);
   }
@@ -44,8 +41,8 @@ router.post(
 
 router.post(
   "/updateEdges",
-  auth.checkUser,
-  mNM.checkUpdateEdgeWeights, //DA IMPLEMENTARE
+  middleware.JWT,
+  middleware.updateEdges,
   async (req, res) => {
     cntrModel.updateEdgeWeights(req, res);
   }
@@ -53,8 +50,8 @@ router.post(
 
 router.post(
   "/admin",
-  admin.checkAdmin,
-  admin.CheckReceiver,
+  middleware.JWT,
+  middleware.admin,
   async (req, res) => {
     cntrModel.creditCharge(req, res);
   }
@@ -62,8 +59,8 @@ router.post(
 
 router.get(
   "/filterModels",
-  auth.checkUser,
-  mNM.checkFilter, 
+  middleware.JWT,
+  middleware.filterModels,
   async (req, res) => {
     cntrModel.filterModel(req, res);
   }
@@ -71,8 +68,8 @@ router.get(
 
 router.get(
   "/getSimulation",
-  auth.checkUser,
-  mNM.checkDoSimulation, 
+  middleware.JWT,
+  middleware.getSimulation, 
   async (req, res) => {
     cntrModel.doSimulationModel(req, res);
   }
