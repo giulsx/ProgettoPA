@@ -1,6 +1,5 @@
 import * as middlewareModel from './middlewareModel';
 import * as middlewareAuth from './middlewareAuth';
-import * as middlewareAdmin from './middlewareAdmin';
 
 export const JWT = [
     middlewareAuth.checkHeader, 
@@ -25,8 +24,8 @@ export const updateEdges = [
 ];
 
 export const admin = [
-    middlewareAdmin.checkAdmin,
-    middlewareAdmin.CheckReceiver
+    middlewareAuth.checkAdmin,
+    middlewareAuth.CheckReceiver
 
 ];
 

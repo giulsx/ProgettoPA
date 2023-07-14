@@ -50,7 +50,6 @@ function validateNodes(nodes) {
   return true; // Il campo "nodes" è nel formato corretto
 }
 
-
 /**
  * Funzione per validare la richiesta per la solve sia corretta, sia per i tipi sia per l'esistenza del modello nel db
  * @param req richiesta
@@ -73,7 +72,6 @@ export async function checkSolve(req: any, res: any, next: any) {
     res.sendStatus(400);
   }
 }
-
 
 /**
  * 
@@ -194,7 +192,7 @@ export async function checkSolve(req: any, res: any, next: any) {
         typeof edge.neighbour === 'string' &&
         edge.newWeight != undefined &&
         typeof edge.newWeight === 'number' &&
-        Number.isInteger(edge.newWeight) // Aggiunto controllo per l'intero
+        Number.isInteger(edge.newWeight) 
       ) {
       } else {
         return false;

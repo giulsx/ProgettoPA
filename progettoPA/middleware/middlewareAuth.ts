@@ -37,6 +37,23 @@ export function verifyAndAuthenticate(req, res, next) {
   }
 }
 
+export async function checkAdmin(req, res, next) {
+  if (req.user.role === "2") {
+    next();
+  } else {
+    res.sendStatus(401);
+  }
+}
+
+export async function CheckReceiver(req, res, next) { // verifica che il ricevente esista effettivamente.
+  const user: any = await User.checkExistingUser(req.user.emailuser);
+  if (user.email === req.user.emailuser) {
+    next();
+  } else {
+    res.sendStatus(404);
+  }
+}
+
 export async function checkUser(req, res, next) {
   if (req.user.email && req.user.role === "1") {
     next();
@@ -60,8 +77,7 @@ export async function checkCredito(req, res, next) {
   }
 }
 
-
-//contare numero di nodi e numeri di archi
+//conto numero di nodi e numeri di archi
 export const costoNodi = (nodes) => {
   const numeroNodi = Object.keys(nodes).length;
   const costoNodi = numeroNodi * 0.15;
