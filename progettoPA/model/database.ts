@@ -1,10 +1,13 @@
 require('dotenv').config();
 import { Sequelize} from "sequelize";
 
-export class SingletonDB 
+
+/**
+ * Classe Singleton per la connessione al Database
+ */
+export class SingletonDatabase 
     { 
-    // connessione al db realizzata con classe Singleton
-    private static instance: SingletonDB;
+    private static instance: SingletonDatabase;
     private singleConnection: Sequelize; 
 
     private constructor() { 
@@ -25,11 +28,11 @@ export class SingletonDB
             
     }
 
-    public static getInstance(): SingletonDB {
-        if (!SingletonDB.instance) {
-            SingletonDB.instance = new SingletonDB();
+    public static getInstance(): SingletonDatabase {
+        if (!SingletonDatabase.instance) {
+            SingletonDatabase.instance = new SingletonDatabase();
         }
-        return SingletonDB.instance;
+        return SingletonDatabase.instance;
     }
     public getConnection() {
         return this.singleConnection;        

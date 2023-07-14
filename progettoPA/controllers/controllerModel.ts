@@ -109,7 +109,7 @@ export class ModelController {
 
   public filterModel = async (req, res) => {
     try {
-      let models: any = await model.getModel(req.body.name);
+      let models: any = await model.getModel(req.body.namemodel);
       let filteredModel = models
         .filter((item) => {
           if (req.body.date) {
@@ -222,7 +222,7 @@ export default ModelController;
 /**
 * Funzione per eseguire il modello e restituire il percorso ottimo con il costo associato.
 */
-function executeModel(graph: any, start: any, goal: any) {
+function executeModel(graph: any, start: any, goal: any): { path: any; cost: any; } {
     const route = new Graph(graph);
     const options = {
       cost: true // include il costo nel risultato
@@ -240,7 +240,7 @@ function executeModel(graph: any, start: any, goal: any) {
 /**
 * Funzione che calcola il numero di archi in un grafo.
 */
-function countEdges(nodes) {
+function countEdges(nodes): number {
   let numEdges = 0;
   for (const node in nodes) {
     numEdges += Object.keys(nodes[node]).length;

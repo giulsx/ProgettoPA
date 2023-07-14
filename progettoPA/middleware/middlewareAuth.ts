@@ -1,6 +1,4 @@
 import * as jwt from "jsonwebtoken";
-import * as sql from "sequelize";
-import { SingletonDB } from "../model/database";
 import * as User from "../model/modelUser";
 
 export var checkHeader = function (req, res, next) {

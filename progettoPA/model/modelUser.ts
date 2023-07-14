@@ -1,7 +1,7 @@
 import { DataTypes, Model, Sequelize } from "sequelize";
-import { SingletonDB } from "../model/database";
+import { SingletonDatabase } from "../model/database";
 
-const sequelize = SingletonDB.getInstance().getConnection();
+const sequelize = SingletonDatabase.getInstance().getConnection();
 
 const User = sequelize.define(
   "users",
@@ -54,13 +54,9 @@ export async function checkExistingUser(email: string) {
  */
 export async function budgetUpdate(newBudget: Number, email: string) {
     const user = await User.update(
-      {
-        budget: newBudget,
-      },
-      {
-        where: { email: `${email}` },
-      }
-    );
+      { budget: newBudget, },
+      { where: { email: `${email}` }, 
+    });
   }
 
   

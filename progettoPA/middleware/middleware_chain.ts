@@ -10,7 +10,7 @@ export const JWT = [
 export const newModel = [
     middlewareAuth.checkUser,
     middlewareAuth.checkCredito,
-    middlewareModel.newModelValidation
+    middlewareModel.checkNewModel
 ];
 
 export const solveModel = [

@@ -1,12 +1,10 @@
 import { DataTypes, Op, IntegerDataType, Model, Sequelize } from "sequelize";
-import { SingletonDB } from "../model/database";
+import { SingletonDatabase } from "../model/database";
 
-const Graph = require('node-dijkstra');
+const sequelize = SingletonDatabase.getInstance().getConnection();
 
-const sequelize = SingletonDB.getInstance().getConnection();
-
-export const Graphs = sequelize.define(
-  "graph",
+export const Models = sequelize.define(
+  "models",
   {  namemodel: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -34,7 +32,7 @@ export const Graphs = sequelize.define(
     },
   },
   {
-    modelName: "graphs",
+    modelName: "models",
     timestamps: false,
   }
 );
@@ -42,7 +40,7 @@ export const Graphs = sequelize.define(
 export async function insertModel(object: any, cost: number) {
   const date = new Date().toLocaleDateString();
 
-  const model = await Graphs.create({
+  const model = await Models.create({
     namemodel: object.name, 
     nodes: object.nodes,
     creation_date: date,
@@ -57,11 +55,11 @@ export async function insertModel(object: any, cost: number) {
 export async function insertUpdate(object: any, version: number) {
   const date = new Date().toLocaleDateString();
 
-  const model = await Graphs.create({
+  const model = await Models.create({
     namemodel: object.name,
     nodes: object.nodes,
     creation_date: date,
-    version: version, //in fase di aggiornamento viene incrementato
+    version: version,
     cost: object.cost,
     valid: true,
   });
@@ -69,30 +67,25 @@ export async function insertUpdate(object: any, version: number) {
   return model;
 }
 
-export async function checkExistingModel(namemodel: string, version?: number) {
-  if (version) {
-    const graphs = await Graphs.findOne({
-      where: { namemodel: namemodel, version: version },
-    });
-    return graphs;
-  } else {
-    const lastVersion: number = await Graphs.max('version', {
-      where: { namemodel: namemodel },
-    });
-    const graphs = await Graphs.findOne({
-      where: { namemodel: namemodel, version: lastVersion },
-    });
-    return graphs;
-  }
-}
 
-export async function getModel(name: string) {
-  const graphs = await Graphs.findAll({
+/**
+ * Esistenza di un modello in base al nome e alla versione
+ */
+export async function checkExistingModel(namemodel: string, version: number) {
+  const model = await Models.findOne({
+    where: { namemodel: `${namemodel}`, version: version },
+  });
+  return model;
+  }
+
+
+export async function getModel(namemodel: string) {
+  const model = await Models.findAll({
     where: {
-      namemodel: name,
-      version: { [Op.gt]: 1 }, // Operator greater, per tornare solo le revisioni (versione >1)
-      valid: { [Op.eq]: true }, // operator equal, per tornare solo i validi (non logicamente cancellati)
+      namemodel: namemodel,
+      version: { [Op.gt]: 1 }, 
+      valid: { [Op.eq]: true },
     },
   });
-  return graphs;
+  return model;
 }
