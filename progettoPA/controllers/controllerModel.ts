@@ -16,7 +16,7 @@ export class ModelController {
   public insertNewModel = async (req, res) => {
     try {
       let totalCost: number =
-        auth.costoArchi(req.body.nodes) + auth.costoNodi(req.body.nodes); // calcolo del costo totale in base al numero di archi e numero di nodi
+        auth.costEdges(req.body.nodes) + auth.costNodes(req.body.nodes); // calcolo del costo totale in base al numero di archi e numero di nodi
       var flag = await model.insertModel(req.body, totalCost);
       if (flag) {
         let oldBudget: any = await user.getBudget(req.user.email);
@@ -113,25 +113,26 @@ export class ModelController {
       let filteredModel = models
         .filter((item) => {
           if (req.body.date) {
-            return req.body.date === item.creation_date; // confronto le stringhe relative alla data
+            return req.body.date === item.creation_date; 
           } else {
             return true;
           }
         })
         .filter((item) => {
           if (req.body.numnodes) {
-            return req.body.numnodes === item.nodes.length; // verifica che il numero dei nodi delle variabili sia quanto richiesto nel filtro
+  
+              return req.body.numnodes === Object.keys(item.nodes).length;
           } else {
             return true;
           }
         })
         .filter((item) => {
           if (req.body.numedges) {
-            return req.body.numedges === countEdges(item.nodes); // verifica che il numero delle variabili sia quanto richiesto nel filtro
+            return req.body.numedges === countEdges(item.nodes);
           } else {
             return true;
           }
-        })
+        })        
       res.send(filteredModel);
     } catch {
       res.sendStatus(400);
@@ -152,13 +153,6 @@ export class ModelController {
       const start = req.body.start; // valore di inizio della simulazione
       const stop = req.body.stop; // valore di fine della simulazione
       const step = req.body.step; // passo di incremento
-
-      // verifica se i valori forniti sono ammissibili
-      if (start >= stop || step <= 0) {
-        res.status(400).json({ message: 'Valori non ammissibili per la simulazione' });
-        return;
-      }
-
       const node = req.body.node; // nodo
       const neighbour = req.body.neighbour; // vicino
 
@@ -240,10 +234,11 @@ function executeModel(graph: any, start: any, goal: any): { path: any; cost: any
 /**
 * Funzione che calcola il numero di archi in un grafo.
 */
-function countEdges(nodes): number {
+function countEdges(nodes: any): number {
   let numEdges = 0;
   for (const node in nodes) {
     numEdges += Object.keys(nodes[node]).length;
   }
   return numEdges;
-};
+}
+

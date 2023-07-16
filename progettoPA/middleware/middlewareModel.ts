@@ -141,7 +141,9 @@ export async function checkSolve(req: any, res: any, next: any) {
           req.body.startnode !== undefined &&
           typeof req.body.startnode === "string" &&
           req.body.endnode !== undefined &&
-          typeof req.body.endnode === "string"
+          typeof req.body.endnode === "string" &&
+          req.body.start <= req.body.stop &&
+          req.body.step >= 0
     ) {
       if (await model.checkExistingModel(req.body.namemodel, req.body.version)) {
         next();

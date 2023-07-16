@@ -1,6 +1,10 @@
 import * as middlewareModel from './middlewareModel';
 import * as middlewareAuth from './middlewareAuth';
 
+/**
+ * Catena di middleware
+ */
+
 export const JWT = [
     middlewareAuth.checkHeader, 
     middlewareAuth.checkToken, 
@@ -15,18 +19,18 @@ export const newModel = [
 
 export const solveModel = [
     middlewareAuth.checkUser,
+    middlewareAuth.checkCredito,
     middlewareModel.checkSolve
 ];
 
 export const updateEdges = [
     middlewareAuth.checkUser,
-
+    middlewareModel.checkUpdateEdgeWeights
 ];
 
 export const admin = [
     middlewareAuth.checkAdmin,
     middlewareAuth.CheckReceiver
-
 ];
 
 export const filterModels = [

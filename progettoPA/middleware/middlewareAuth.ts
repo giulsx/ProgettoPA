@@ -43,7 +43,7 @@ export async function checkAdmin(req, res, next) {
   }
 }
 
-export async function CheckReceiver(req, res, next) { // verifica che il ricevente esista effettivamente.
+export async function CheckReceiver(req, res, next) {
   const user: any = await User.checkExistingUser(req.user.emailuser);
   if (user.email === req.user.emailuser) {
     next();
@@ -76,14 +76,14 @@ export async function checkCredito(req, res, next) {
 }
 
 //conto numero di nodi e numeri di archi
-export const costoNodi = (nodes) => {
+export const costNodes = (nodes) => {
   const numeroNodi = Object.keys(nodes).length;
   const costoNodi = numeroNodi * 0.15;
   return costoNodi;
 };
   
 //conto il costo addebitato agli archi come il numero di archi
-export const costoArchi = (nodes) => {
+export const costEdges = (nodes) => {
   let countArchi = 0;
 
   for (const node in nodes) {

@@ -24,6 +24,16 @@
 				"body": {
 					"mode": "raw",
 					"raw": "{\n\"namemodel\": \"grafo_uno\",\n\"nodes\": { \"A\": { \"B\": 1, \"C\": 2 },\n  \"B\": { \"A\": 1, \"C\": 3, \"D\": 2 },\n  \"C\": { \"A\": 2, \"B\": 3, \"D\": 1, \"E\": 4 },\n  \"D\": { \"B\": 2, \"C\": 1, \"E\": 3, \"F\": 2 },\n  \"E\": { \"C\": 4, \"D\": 3, \"F\": 1, \"G\": 2 },\n  \"F\": { \"D\": 2, \"E\": 1, \"G\": 3, \"H\": 4 },\n  \"G\": { \"E\": 2, \"F\": 3, \"H\": 1 },\n  \"H\": { \"F\": 4, 'G\": 1 }\n}\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/newModel",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"newModel"
+					]
 				}
 			},
 			"response": []
@@ -77,7 +87,12 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"namemodel\": \"grafo_1\",\n  \"version\": 1,\n  \"edges\": [\n    {\n      \"node\": \"A\",\n      \"neighbour\": \"B\",\n      \"newWeight\": 4\n    },\n    {\n      \"node\": \"A\",\n      \"neighbour\": \"C\",\n      \"newWeight\": 3\n    }\n  ]\n}"
+					"raw": "{\n  \"namemodel\": \"grafo_1\",\n  \"version\": 1,\n  \"edges\": [\n    {\n      \"node\": \"A\",\n      \"neighbour\": \"B\",\n      \"newWeight\": 4\n    },\n    {\n      \"node\": \"A\",\n      \"neighbour\": \"C\",\n      \"newWeight\": 3\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
 					"raw": "localhost:8080/updateEdges",
