@@ -23,11 +23,11 @@ Nel dettaglio le richieste sono le seguenti:
 - Prevedere una rotta per l’utente con ruolo admin che consenta di effettuare la ricarica per un utente fornendo la mail ed il nuovo credito (sempre mediante JWT). I token JWT devono contenere i dati essenziali.
 - Il numero residuo di token deve essere memorizzato del database sopra citato.
 - Si deve prevedere degli script di seed per inizializzare il sistema. Nella fase di dimostrazione (demo) è necessario prevedere almeno due modelli diversi con almeno due versioni con una complessità minima di 8 nodi e 16 archi.
-Si chiede di utilizzare le funzionalità di middleware sollevando le opportune eccezioni.
+- Si chiede di utilizzare le funzionalità di middleware sollevando le opportune eccezioni.
 
 ## PROGETTAZIONE
-I requisiti prevedono l’utilizzo di un token JWT per ogni richiesta, in essi saranno contenuti i dati essenziali.
-In base all’utilizzo del sistema ci sono due tipologie di utilizzatori: utenti e admin. I token gestiti dai middleware saranno di due tipologie.
+I requisiti prevedono l’utilizzo di un token JWT per ogni richiesta, in essi saranno contenuti i dati essenziali.\
+In base all’utilizzo del sistema ci sono due tipologie di utilizzatori: utenti e admin. I token gestiti dai middleware saranno di due tipologie.\
 Il token relativo all’utente contiene l’email dell’utente e il ruolo (che per l’utente è pari a 1):
 ```
 {
@@ -47,7 +47,7 @@ Il token relativo all’utente contiene l’email, il ruolo (che per l’admin �
 }
 ```
 ### _newModel_
-La prima rotta inserita è quella relativa all’inserimento di un nuovo modello nel database. 
+La prima rotta inserita è quella relativa all’inserimento di un nuovo modello nel database. \
 ```
 {
 "namemodel": "grafo_uno",
@@ -63,7 +63,7 @@ La prima rotta inserita è quella relativa all’inserimento di un nuovo modello
 }
 ```
 ### _solveModel_
-La seconda rotta inserita permette l’esecuzione del modello, l’utente deve inserire il nome del modello e la relativa versione.
+La seconda rotta inserita permette l’esecuzione del modello, l’utente deve inserire il nome del modello e la relativa versione.\
 Un esempio di richiesta:
 ```
 {
@@ -74,10 +74,11 @@ Un esempio di richiesta:
 }
 ```
 ### _admin_
-La terza rotta è quella che permette ad un admin di ricaricare il budget di un utente.
+La terza rotta è quella che permette ad un admin di ricaricare il budget di un utente.\
+Non presenta un body in quanto all'interno del token sono presenti tutte i dati necessari a tale operazione, ovvero l'email del ricevente, i token da aggiungere e il ruolo dell'admin stesso. 
 
 ### _filterModels_
-La quarta rotta ha la funzionalità di filtrare le versioni di un modello presenti nel database, la scelta di filtraggio può essere eseguita in base alla data di creazione, al numero di nodi e al numero di archi. 
+La quarta rotta ha la funzionalità di filtrare le versioni di un modello presenti nel database, la scelta di filtraggio può essere eseguita in base alla data di creazione, al numero di nodi e al numero di archi.\
 Un esempio di richiesta:
 ```
 {
@@ -88,6 +89,8 @@ Un esempio di richiesta:
 }
 ```
 ### _getSimulation_
+La quinta rotta permette di effettuare una simulazione cambiando il peso relativo ad un arco specificando il valore di inizio, fine e step.\
+Quindi l'utente dovrà inserire il nome e la versione del modello, l'arco (quindi un nodo e un suo vicino) a cui si vuole far variare il peso, i valori di start, stop e step, e i nodi di inizio e fine per l'esecuzione del grafo.\
 Un esempio di richiesta:
 ```
 {
@@ -103,7 +106,7 @@ Un esempio di richiesta:
 }
 ```
 ### _updateEdgesWeights_
-
+La sesta rotta ha il compito di aggiornare il peso di uno o più archi, l'utente deve insierire il nome e la versione del modello in questione e gli archi (quindi un nodo e un suo vicino) con il peso da aggiornare.\
 Un esempio di richiesta:
 ```
 {
@@ -126,8 +129,21 @@ Un esempio di richiesta:
 ## PATTERN
 
 ### VCM
+
+### Middleware
+Il middleware è il livello intermedio responsabile della convalida delle richieste.\
+Tutte le richieste passano attraverso la validazione del middleware per verificare la validità del token associato alla richiesta e la correttezza dei dati inseriti.
+
 ### Singleton
+Il Singleton fa parte dei Creational Design Pattern e assicura che una classe abbia un'unica istanza accessibile a livello globale.\
+Questo pattern è stato utilizzato per instaurare una connessione con il database e garantire di lavorare sulla stessa instanza, così da evitare di avere connessioni multiple.
+
 ### Chain of Responsability
+La CoR fa parte dei Behavioural Design Pattern e permette di processare una richiesta attraverso l'esecuzione di funzioni collegate tra loro in un determinato ordine.\
+Tale pattern è stato utilizzato per filtrare le richieste HTTP in modo che al controller vengano inviate solo le richieste  corrette.\ 
+Per ogni rotta è stata definita una catena di middleware composta da:
+* middleware per il controllo dell'header e del token JWT;
+* middleware specifici della rotta;
 
 ## Avvio del servizio
 affinché il servizio possa essere avviato bisogna assicurarsi di avere l'ambiente Docker installato sulla propria macchina
@@ -144,8 +160,9 @@ Procedura di avvio:
 
 ## TEST
 
-nella cartella è presente un file "Models.postman_collection.json" che può essere importato su Postman per eseguire i test.
-I token JWT sono stati realizzati tramite la chiave "mysecret"
+nella cartella è presente un file "Models.postman_collection.json" che può essere importato su Postman per eseguire i test.\
+I token JWT sono stati realizzati tramite la chiave "mysecret".
+
 
 ## Framework/librerie utilizzate
 - [Node.js](https://nodejs.org/it/)
