@@ -108,7 +108,7 @@
 			"response": []
 		},
 		{
-			"name": "admin",
+			"name": "refillCredit",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -123,13 +123,13 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/admin",
+					"raw": "localhost:8080/refillCredit",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"admin"
+						"refillCredit"
 					]
 				}
 			},
@@ -190,7 +190,12 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"namemodel\": \"grafo_uno\",\n    \"version\": 1\n    \"node\": \"A\",\n    \"neighbour\": \"B\",\n    \"start\": 1,\n    \"stop\": 0.5,\n    \"step\": 3,\n    \"startnode\" \"A\",\n    \"endnode\": \"H\"\n}"
+					"raw": "{\n    \"namemodel\": \"grafo_uno\",\n    \"version\": 1,\n    \"node\": \"A\",\n    \"neighbour\": \"B\",\n    \"start\": 1,\n    \"stop\": 3,\n    \"step\": 0.5,\n    \"startnode\": \"A\",\n    \"endnode\": \"H\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
 					"raw": "localhost:8080/getSimulation",

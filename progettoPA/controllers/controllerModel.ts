@@ -13,7 +13,7 @@ export class ModelController {
   * L'inserimento prevede un costo (basato sul numero di nodi e numero di archi)che l'utente dovrà pagare.
   */
 
-  public insertNewModel = async (req, res) => {
+  public addNewModel = async (req, res) => {
     try {
       let totalCost: number =
         auth.costEdges(req.body.nodes) + auth.costNodes(req.body.nodes); // calcolo del costo totale in base al numero di archi e numero di nodi
@@ -66,7 +66,7 @@ export class ModelController {
   * Aggiornamento del costo di uno o più archi di un dato modello.
   */
 
-  public updateEdgeWeights = async (req, res) => {
+  public updateEdgesWeights = async (req, res) => {
     try {
       const name = req.body.namemodel; 
       const version = req.body.version;
@@ -194,7 +194,7 @@ export class ModelController {
   /**
   * Aggiornamento del budget dell'utente in base al valore previsto dall'admin.
   */
-  public creditCharge = async (req, res) => {
+  public refillCredit = async (req, res) => {
     try {
       if (Number(req.user.budget) > 0) {
         let oldBudget: any = await user.getBudget(req.user.emailuser);

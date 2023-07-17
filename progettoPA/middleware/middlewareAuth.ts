@@ -63,7 +63,7 @@ export async function checkUser(req, res, next) {
 export async function checkCredito(req, res, next) {
   try {
     let nodes = req.body;
-    let totalCost: number = costoNodi(nodes) + costoArchi(nodes);
+    let totalCost: number = costNodes(nodes) + costEdges(nodes);
     const budget: any = await User.getBudget(req.user.email);
     if (budget.budget > totalCost) { // vediamo se c'è credito a sufficienza
       next();

@@ -5,7 +5,7 @@ import * as middleware from "../middleware/middleware_chain";
 const express = require("express");
 const router = express.Router();
 
-let cntrModel = new ModelController();
+let controller = new ModelController();
 router.use(express.json());
 
 //middleware per verificare che le richieste siano un json
@@ -26,7 +26,7 @@ router.post(
   middleware.JWT,
   middleware.newModel,
   async (req, res) => {
-    cntrModel.insertNewModel(req, res);
+    controller.addNewModel(req, res);
   }
 );
 
@@ -35,7 +35,7 @@ router.post(
   middleware.JWT,
   middleware.solveModel,
   async (req, res) => {
-    cntrModel.solveModel(req, res);
+    controller.solveModel(req, res);
   }
 );
 
@@ -44,16 +44,16 @@ router.post(
   middleware.JWT,
   middleware.updateEdges,
   async (req, res) => {
-    cntrModel.updateEdgeWeights(req, res);
+    controller.updateEdgesWeights(req, res);
   }
 );
 
 router.post(
-  "/admin",
+  "/refillCredit",
   middleware.JWT,
   middleware.admin,
   async (req, res) => {
-    cntrModel.creditCharge(req, res);
+    controller.refillCredit(req, res);
   }
 );
 
@@ -62,7 +62,7 @@ router.get(
   middleware.JWT,
   middleware.filterModels,
   async (req, res) => {
-    cntrModel.filterModel(req, res);
+    controller.filterModel(req, res);
   }
 );
 
@@ -71,7 +71,7 @@ router.get(
   middleware.JWT,
   middleware.getSimulation, 
   async (req, res) => {
-    cntrModel.doSimulationModel(req, res);
+    controller.doSimulationModel(req, res);
   }
 );
 
