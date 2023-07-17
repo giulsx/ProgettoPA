@@ -1,7 +1,6 @@
 # ProgettoPA
 
 # Obiettivi
-
 L’obiettivo è quello di realizzare un back-end che consenta di gestire e valutare di modelli di ottimizzazione su grafo. In particolare il sistema deve prevedere la possibilità di gestire l’aggiornamento di pesi effettuato da utenti autenticati.
 Nel dettaglio le richieste sono le seguenti:
 - Dare la possibilità di creare un nuovo modello seguendo l’interfaccia definita nella sezione API di https://www.npmjs.com/package/node-dijkstra ed in particolare di specificare il grafo con i relativi pesi.
@@ -40,8 +39,10 @@ Il token relativo all’utente contiene l’email dell’utente e il ruolo (che 
   "iat": 1516239022
 }
 ```
+\
 Il token relativo all’utente contiene l’email, il ruolo (che per l’admin è pari a 2), l’email dell’utente a cui deve fare la ricarica e il budget da aggiungere a tale utente.
 ```
+\
 {
   "email": "admin@email.it",
   "emailuser": "user@email.it",
@@ -50,6 +51,7 @@ Il token relativo all’utente contiene l’email, il ruolo (che per l’admin �
   "iat": 1516239022
 }
 ```
+
 ## Richieste 
 
 | Rotta            | Tipo | Autenticazione JWT |
@@ -61,10 +63,11 @@ Il token relativo all’utente contiene l’email, il ruolo (che per l’admin �
 | /filterModels    | GET  | SI                 |
 | /getSimulation   | GET  | SI                 |
 
+
 ### newModel
 La prima rotta inserita è quella relativa all’inserimento di un nuovo modello nel database. \
 La richiesta inizialmente deve superare i controlli del middleware che verificano se l'utente esiste e se ha credito sufficiente per creare il modello; inoltre sono presenti anche dei controlli relativi alla struttura del grafo. \
-In seguito il modello verrà inserito nel database.\
+In seguito il modello verrà inserito nel database. 
 
 Un esempio di richiesta:
 
@@ -82,10 +85,12 @@ Un esempio di richiesta:
 }
 }
 ```
+
 ### solveModel
 Questa rotta permette l’esecuzione del modello, l’utente deve inserire il nome del modello e la relativa versione.\
 Sono presenti dei controlli del middleware simili a quelli della rotta precedente, in particolare ci sono controlli riguardanti l'esistenza dell'utente, il credito disponibile e la correttezza della richiesta che prevede l'inserimento del nome del modello, della versione e dei nodi di inzio e fine.\
 Un esempio di richiesta:
+ 
 ```
 {
     "namemodel": "grafo_uno",
@@ -94,10 +99,12 @@ Un esempio di richiesta:
     "goal": "H"
 }
 ```
+
 ### updateEdges
 La terza rotta ha il compito di aggiornare il peso di uno o più archi, l'utente deve insierire il nome e la versione del modello in questione e gli archi (quindi un nodo e un suo vicino) con il peso da aggiornare.\
 In questo caso i controlli del middleware devono verificare l'esistenza dell'utente e se la richiesta è corretta.\
 Un esempio di richiesta:
+ 
 ```
 {
   "namemodel": "grafo_uno",
@@ -116,6 +123,7 @@ Un esempio di richiesta:
   ]
 }
 ```
+\
 ### refillCredit
 Tale rotta permette ad un admin di ricaricare il budget di un utente.\
 La richiesta non presenta un body in quanto all'interno del token sono presenti tutte i dati necessari per effettuare tale operazione, ovvero l'email del ricevente, i token da aggiungere e il ruolo dell'admin stesso.\
@@ -123,8 +131,9 @@ Il middleware avrà il compito di verificare tali dati.
 
 ### filterModels
 La quinta rotta ha la funzionalità di filtrare le versioni di un modello presenti nel database, la scelta di filtraggio può essere eseguita in base alla data di creazione, al numero di nodi e al numero di archi.\
-In questo caso, come per le rotte di /updateEdges e /getSimulation basta verificare 'esistenza dell'utente e l'inserimento di una richiesta valida.
+In questo caso, come per le rotte di /updateEdges e /getSimulation basta verificare 'esistenza dell'utente e l'inserimento di una richiesta valida.\
 Un esempio di richiesta:
+
 ```
 {
    "namemodel": "grafo_uno",
@@ -137,6 +146,7 @@ Un esempio di richiesta:
 La sesta rotta permette di effettuare una simulazione cambiando il peso relativo ad un arco specificando il valore di inizio, fine e step.\
 Quindi l'utente dovrà inserire il nome e la versione del modello, l'arco (quindi un nodo e un suo vicino) a cui si vuole far variare il peso, i valori di start, stop e step, e i nodi di inizio e fine per l'esecuzione del grafo.\
 Un esempio di richiesta:
+
 ```
 {
     "namemodel": "grafo_uno",
@@ -150,10 +160,10 @@ Un esempio di richiesta:
     "endnode": "H"
 }
 ```
+ 
 ---
 
 # UML
-
 Di seguito è riportato il diagramma dei casi d'uso:
 
 <img src = "diagrammi/useCase.jpg">
@@ -162,29 +172,29 @@ Di seguito sono riportati i diagrammi delle sequenze delle varie chiamate:
 
 - ### POST /newModel
   <img src = "diagrammi/newModel.jpg">
-  
+
 - ### POST /solveModel
    <img src = "diagrammi/solveModel.jpg">
-   
+  
 - ### POST /updateEdges
   <img src = "diagrammi/updateEdges.jpg">
   
 - ### POST /refillCredit
    <img src = "diagrammi/admin.jpg">
-   
+  
 - ### GET /filterModels
    <img src = "diagrammi/filterModels.jpg">
-   
+  
 - ### GET /getSimulation
    <img src = "diagrammi/simulation.jpg">
-   
+ 
 ---
 
 # Pattern utilizzati
 
 ### VCM
 Model-View-Controller è un Patter Architteturale, in particolare in questo progetto è stato usato un Model-Controller in quanto è stata implementata solo la parte di back-end. Il Model ha consentito la gestione dell'intero database e delle operazioni eseguite su di esso, mentre il Controller ha permesso la gestione dell'utente con l'applicazione.
-
+  
 ### Singleton
 Il Singleton fa parte dei Design Pattern Creazionale e assicura che una classe abbia un'unica istanza accessibile a livello globale.\
 Questo pattern è stato utilizzato per instaurare una connessione con il database e garantire di lavorare sulla stessa instanza, così da evitare di avere connessioni multiple.
@@ -204,7 +214,7 @@ Per ogni rotta è stata definita una catena di middleware composta da:
 
 # Avvio del servizio
 affinché il servizio possa essere avviato bisogna assicurarsi di avere l'ambiente Docker installato sulla propria macchina
-
+  
 Procedura di avvio:
 - clonare la cartella presente nel repository e posizionarsi in essa
 - nella cartella è presente un file variabiliAmbiente in cui ci sono le variabili d'ambiene da inserire in un file .env
@@ -228,7 +238,7 @@ I token JWT sono stati realizzati tramite la chiave "mysecret".
 - [Sequelize](https://sequelize.org/)
 - [Postgres](https://postgresql.org/)
 - [node-dijkstra](https://www.npmjs.com/package/node-dijkstra/)
-
+  
 ## Software 
 - [Visual Studio Code](https://code.visualstudio.com/)
 - [Docker](https://www.docker.com/) 
