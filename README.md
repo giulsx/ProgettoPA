@@ -127,9 +127,12 @@ Un esempio di richiesta:
 }
 ```
 
-### Diagrammi delle sequenze
+## UML
 
-Di seguito verranno riportati i diagrammi delle seguenze delle varie chiamate:
+Di seguito è riportato l'Use Case Diagram:
+<img src = "diagrammi/useCase.jpg">
+
+Di seguito verranno riportati i diagrammi delle sequenze delle varie chiamate:
 
 - ### POST /newModel
   <img src = "diagrammi/newModel.jpg">
