@@ -126,6 +126,24 @@ Un esempio di richiesta:
   ]
 }
 ```
+
+### Diagrammi delle sequenze
+
+Di seguito verranno riportati i diagrammi delle seguenze delle varie chiamate:
+
+- ### POST /newModel
+  <img src = "diagrammi/newModel.jpg">
+- ### POST /solveModel
+   <img src = "diagrammi/solveModel.jpg">
+- ### POST /updateEdges
+  <img src = "diagrammi/updateEdges.jpg">
+- ### POST /refillCredit
+   <img src = "diagrammi/admin.jpg">
+- ### GET /filterModels
+   <img src = "diagrammi/filterModels.jpg">
+- ### GET /getSimulation
+   <img src = "diagrammi/simulation.jpg">
+
 ## PATTERN
 
 ### VCM
