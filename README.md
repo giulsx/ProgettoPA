@@ -63,6 +63,11 @@ Il token relativo all’utente contiene l’email, il ruolo (che per l’admin �
 
 ### newModel
 La prima rotta inserita è quella relativa all’inserimento di un nuovo modello nel database. \
+La richiesta inizialmente deve superare i controlli del middleware che verificano se l'utente esiste e se ha credito sufficiente per creare il modello; inoltre sono presenti anche dei controlli relativi alla struttura del grafo. \
+In seguito il modello verrà inserito nel database.\
+
+Un esempio di richiesta:
+
 ```
 {
 "namemodel": "grafo_uno",
@@ -78,7 +83,8 @@ La prima rotta inserita è quella relativa all’inserimento di un nuovo modello
 }
 ```
 ### solveModel
-La seconda rotta inserita permette l’esecuzione del modello, l’utente deve inserire il nome del modello e la relativa versione.\
+Questa rotta permette l’esecuzione del modello, l’utente deve inserire il nome del modello e la relativa versione.\
+Sono presenti dei controlli del middleware simili a quelli della rotta precedente, in particolare ci sono controlli riguardanti l'esistenza dell'utente, il credito disponibile e la correttezza della richiesta che prevede l'inserimento del nome del modello, della versione e dei nodi di inzio e fine.\
 Un esempio di richiesta:
 ```
 {
@@ -88,12 +94,13 @@ Un esempio di richiesta:
     "goal": "H"
 }
 ```
-### updateEdgesWeights
+### updateEdges
 La terza rotta ha il compito di aggiornare il peso di uno o più archi, l'utente deve insierire il nome e la versione del modello in questione e gli archi (quindi un nodo e un suo vicino) con il peso da aggiornare.\
+In questo caso i controlli del middleware devono verificare l'esistenza dell'utente e se la richiesta è corretta.\
 Un esempio di richiesta:
 ```
 {
-  "namemodel": "grafo_1",
+  "namemodel": "grafo_uno",
   "version": 1,
   "edges": [
     {
@@ -110,11 +117,13 @@ Un esempio di richiesta:
 }
 ```
 ### refillCredit
-La quarta rotta è quella che permette ad un admin di ricaricare il budget di un utente.\
-Non presenta un body in quanto all'interno del token sono presenti tutte i dati necessari a tale operazione, ovvero l'email del ricevente, i token da aggiungere e il ruolo dell'admin stesso. 
+Tale rotta permette ad un admin di ricaricare il budget di un utente.\
+La richiesta non presenta un body in quanto all'interno del token sono presenti tutte i dati necessari per effettuare tale operazione, ovvero l'email del ricevente, i token da aggiungere e il ruolo dell'admin stesso.\
+Il middleware avrà il compito di verificare tali dati.
 
 ### filterModels
 La quinta rotta ha la funzionalità di filtrare le versioni di un modello presenti nel database, la scelta di filtraggio può essere eseguita in base alla data di creazione, al numero di nodi e al numero di archi.\
+In questo caso, come per le rotte di /updateEdges e /getSimulation basta verificare 'esistenza dell'utente e l'inserimento di una richiesta valida.
 Un esempio di richiesta:
 ```
 {
@@ -135,9 +144,9 @@ Un esempio di richiesta:
     "node": "A",
     "neighbour": "B",
     "start": 1,
-    "stop": 0.5,
-    "step": 3,
-    "startnode" "A",
+    "stop": 3,
+    "step": 0.5,
+    "startnode": "A",
     "endnode": "H"
 }
 ```
@@ -146,20 +155,26 @@ Un esempio di richiesta:
 # UML
 
 Di seguito è riportato il diagramma dei casi d'uso:
+
 <img src = "diagrammi/useCase.jpg">
 
 Di seguito sono riportati i diagrammi delle sequenze delle varie chiamate:
 
 - ### POST /newModel
   <img src = "diagrammi/newModel.jpg">
+  
 - ### POST /solveModel
    <img src = "diagrammi/solveModel.jpg">
+   
 - ### POST /updateEdges
   <img src = "diagrammi/updateEdges.jpg">
+  
 - ### POST /refillCredit
    <img src = "diagrammi/admin.jpg">
+   
 - ### GET /filterModels
    <img src = "diagrammi/filterModels.jpg">
+   
 - ### GET /getSimulation
    <img src = "diagrammi/simulation.jpg">
    
