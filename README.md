@@ -123,7 +123,7 @@ Un esempio di richiesta:
   ]
 }
 ```
-\
+
 ### refillCredit
 Tale rotta permette ad un admin di ricaricare il budget di un utente.\
 La richiesta non presenta un body in quanto all'interno del token sono presenti tutte i dati necessari per effettuare tale operazione, ovvero l'email del ricevente, i token da aggiungere e il ruolo dell'admin stesso.\
@@ -205,7 +205,7 @@ Tutte le richieste passano attraverso la validazione del middleware per verifica
 
 ### Chain of Responsability
 La CoR fa parte dei Design Pattern comportamentali e permette di processare una richiesta attraverso l'esecuzione di funzioni collegate tra loro in un determinato ordine.\
-Tale pattern è stato utilizzato per filtrare le richieste HTTP in modo che al controller vengano inviate solo le richieste  corrette.\ 
+Tale pattern è stato utilizzato per filtrare le richieste HTTP in modo che al controller vengano inviate solo le richieste  corrette.\
 Per ogni rotta è stata definita una catena di middleware composta da:
 * middleware per il controllo dell'header e del token JWT;
 * middleware specifici della rotta;
