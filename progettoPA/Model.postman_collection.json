@@ -1,8 +1,8 @@
 {
 	"info": {
-		"_postman_id": "114987db-58aa-4a6f-b9dc-e3b11adb34d0",
+		"_postman_id": "1803f42f-3fa4-4ba5-b2db-977f5f171e9f",
 		"name": "Model",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "26210580"
 	},
 	"item": [
@@ -11,30 +11,22 @@
 			"request": {
 				"auth": {
 					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZW1haWwuaXQiLCJyb2xlIjoiMSIsImlhdCI6MTUxNjIzOTAyMn0.RnXdWt7m5AW1fzvCtX5iThKqXVos038IyBukJf8fdoQ",
-							"type": "string"
-						}
-					]
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZW1haWwuaXQiLCJyb2xlIjoiMSIsImlhdCI6MTUxNjIzOTAyMn0.RnXdWt7m5AW1fzvCtX5iThKqXVos038IyBukJf8fdoQ"
+					}
 				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\"namemodel\": \"grafo_uno\",\n\"nodes\": { \"A\": { \"B\": 1, \"C\": 2 },\n  \"B\": { \"A\": 1, \"C\": 3, \"D\": 2 },\n  \"C\": { \"A\": 2, \"B\": 3, \"D\": 1, \"E\": 4 },\n  \"D\": { \"B\": 2, \"C\": 1, \"E\": 3, \"F\": 2 },\n  \"E\": { \"C\": 4, \"D\": 3, \"F\": 1, \"G\": 2 },\n  \"F\": { \"D\": 2, \"E\": 1, \"G\": 3, \"H\": 4 },\n  \"G\": { \"E\": 2, \"F\": 3, \"H\": 1 },\n  \"H\": { \"F\": 4, 'G\": 1 }\n}\n}"
+					"raw": "{\n\"namemodel\": \"grafo_uno\",\n\"nodes\": { \"A\": { \"B\": 1, \"C\": 2 },\n  \"B\": { \"A\": 1, \"C\": 3, \"D\": 2 },\n  \"C\": { \"A\": 2, \"B\": 3, \"D\": 1, \"E\": 4 },\n  \"D\": { \"B\": 2, \"C\": 1, \"E\": 3, \"F\": 2 },\n  \"E\": { \"C\": 4, \"D\": 3, \"F\": 1, \"G\": 2 },\n  \"F\": { \"D\": 2, \"E\": 1, \"G\": 3, \"H\": 4 },\n  \"G\": { \"E\": 2, \"F\": 3, \"H\": 1 },\n  \"H\": { \"F\": 4, \"G\": 1 }\n}\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
 				},
-				"url": {
-					"raw": "localhost:8080/newModel",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"newModel"
-					]
-				}
+				"url": "localhost:8080/newModel"
 			},
 			"response": []
 		},
@@ -43,30 +35,22 @@
 			"request": {
 				"auth": {
 					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZW1haWwuaXQiLCJyb2xlIjoiMSIsImlhdCI6MTUxNjIzOTAyMn0.RnXdWt7m5AW1fzvCtX5iThKqXVos038IyBukJf8fdoQ",
-							"type": "string"
-						}
-					]
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZW1haWwuaXQiLCJyb2xlIjoiMSIsImlhdCI6MTUxNjIzOTAyMn0.RnXdWt7m5AW1fzvCtX5iThKqXVos038IyBukJf8fdoQ"
+					}
 				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"namemodel\": \"grafo_uno\",\n    \"version\": 1,\n    \"start\" \"A\",\n    \"goal\": \"H\"\n}"
+					"raw": "{\n    \"namemodel\": \"grafo_uno\",\n    \"version\": 1,\n    \"start\": \"A\",\n    \"goal\": \"H\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
 				},
-				"url": {
-					"raw": "localhost:8080/solveModel",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"solveModel"
-					]
-				}
+				"url": "localhost:8080/solveModel"
 			},
 			"response": []
 		},
@@ -75,35 +59,22 @@
 			"request": {
 				"auth": {
 					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZW1haWwuaXQiLCJyb2xlIjoiMSIsImlhdCI6MTUxNjIzOTAyMn0.RnXdWt7m5AW1fzvCtX5iThKqXVos038IyBukJf8fdoQ",
-							"type": "string"
-						}
-					]
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZW1haWwuaXQiLCJyb2xlIjoiMSIsImlhdCI6MTUxNjIzOTAyMn0.RnXdWt7m5AW1fzvCtX5iThKqXVos038IyBukJf8fdoQ"
+					}
 				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"namemodel\": \"grafo_1\",\n  \"version\": 1,\n  \"edges\": [\n    {\n      \"node\": \"A\",\n      \"neighbour\": \"B\",\n      \"newWeight\": 4\n    },\n    {\n      \"node\": \"A\",\n      \"neighbour\": \"C\",\n      \"newWeight\": 3\n    }\n  ]\n}",
+					"raw": "{\n  \"namemodel\": \"grafo_uno\",\n  \"version\": 1,\n  \"edges\": [\n    {\n      \"node\": \"A\",\n      \"neighbour\": \"B\",\n      \"newWeight\": 4\n    },\n    {\n      \"node\": \"A\",\n      \"neighbour\": \"C\",\n      \"newWeight\": 3\n    }\n  ]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": {
-					"raw": "localhost:8080/updateEdges",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"updateEdges"
-					]
-				}
+				"url": "localhost:8080/updateEdges"
 			},
 			"response": []
 		},
@@ -112,26 +83,13 @@
 			"request": {
 				"auth": {
 					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLml0IiwiZW1haWx1c2VyIjoidXNlckBlbWFpbC5pdCIsInJvbGUiOiIyIiwiYnVkZ2V0IjoiMTAwIiwiaWF0IjoxNTE2MjM5MDIyfQ.OZr8oNCTT3_cUbzLkHoN3xExVrscIQid8Dt5t3_h_dQ",
-							"type": "string"
-						}
-					]
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLml0IiwiZW1haWx1c2VyIjoidXNlckBlbWFpbC5pdCIsInJvbGUiOiIyIiwiYnVkZ2V0IjoiMTAwIiwiaWF0IjoxNTE2MjM5MDIyfQ.OZr8oNCTT3_cUbzLkHoN3xExVrscIQid8Dt5t3_h_dQ"
+					}
 				},
 				"method": "POST",
 				"header": [],
-				"url": {
-					"raw": "localhost:8080/refillCredit",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"refillCredit"
-					]
-				}
+				"url": "localhost:8080/refillCredit"
 			},
 			"response": []
 		},
@@ -143,30 +101,22 @@
 			"request": {
 				"auth": {
 					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZW1haWwuaXQiLCJyb2xlIjoiMSIsImlhdCI6MTUxNjIzOTAyMn0.RnXdWt7m5AW1fzvCtX5iThKqXVos038IyBukJf8fdoQ",
-							"type": "string"
-						}
-					]
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZW1haWwuaXQiLCJyb2xlIjoiMSIsImlhdCI6MTUxNjIzOTAyMn0.RnXdWt7m5AW1fzvCtX5iThKqXVos038IyBukJf8fdoQ"
+					}
 				},
 				"method": "GET",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"namemodel\": \"grafo_uno\",\n  \"date\": \"7/10/2023\",\n  \"numnodes\": 8,\n  \"numedges\": 16\n}"
+					"raw": "{\n  \"namemodel\": \"grafo_uno\",\n  \"date\": \"7/10/2023\",\n  \"numnodes\": 8,\n  \"numedges\": 16\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
 				},
-				"url": {
-					"raw": "localhost:8080/filterModels",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"filterModels"
-					]
-				}
+				"url": "localhost:8080/filterModels"
 			},
 			"response": []
 		},
@@ -178,13 +128,9 @@
 			"request": {
 				"auth": {
 					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZW1haWwuaXQiLCJyb2xlIjoiMSIsImlhdCI6MTUxNjIzOTAyMn0.RnXdWt7m5AW1fzvCtX5iThKqXVos038IyBukJf8fdoQ",
-							"type": "string"
-						}
-					]
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZW1haWwuaXQiLCJyb2xlIjoiMSIsImlhdCI6MTUxNjIzOTAyMn0.RnXdWt7m5AW1fzvCtX5iThKqXVos038IyBukJf8fdoQ"
+					}
 				},
 				"method": "GET",
 				"header": [],
@@ -197,16 +143,7 @@
 						}
 					}
 				},
-				"url": {
-					"raw": "localhost:8080/getSimulation",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"getSimulation"
-					]
-				}
+				"url": "localhost:8080/getSimulation"
 			},
 			"response": []
 		}
